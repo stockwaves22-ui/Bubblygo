@@ -1,9 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Initialize with a fallback empty string to prevent constructor crash if env var is missing during build
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "TEMPORARY_BUILD_KEY" });
 
 export const getStainAdvice = async (stainQuery: string): Promise<string> => {
-  if (!process.env.API_KEY) {
+  // Check if key is actually present and valid before calling
+  if (!process.env.API_KEY || process.env.API_KEY === "TEMPORARY_BUILD_KEY") {
     return "Sisya AI is currently offline (Missing API Key).";
   }
 

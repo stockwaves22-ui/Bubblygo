@@ -37,7 +37,7 @@ export const CONTENT = {
     buttonText: "Book Pickup Now",
     
     // The large image on the right side
-    mainImage: "https://images.pexels.com/photos/4700611/pexels-photo-4700611.jpeg",
+    mainImage: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGF1bmRyeXxlbnwwfHwwfHx8MA%3D%3D",
     
     // Small features listed below the button
     features: [

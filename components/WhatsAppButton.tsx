@@ -10,8 +10,8 @@ export const WhatsAppButton: React.FC = () => {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      // Updated position: bottom-24 right-6 (Stacked above the AI button which is at bottom-6 right-6)
-      className="fixed bottom-24 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white p-3 rounded-full shadow-lg hover:bg-[#20bd5a] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+      // Positioned at bottom-6 right-6 for standard access
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white p-3 rounded-full shadow-lg hover:bg-[#20bd5a] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
       aria-label="Chat on WhatsApp"
     >
       <svg 

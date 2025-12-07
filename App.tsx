@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Services } from './components/Services';
@@ -13,6 +13,10 @@ function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>('');
   const { about } = CONTENT;
+
+  useEffect(() => {
+    console.log("BubblyGo App: Mounted successfully and running!");
+  }, []);
 
   const handleBookClick = () => {
     setSelectedService(''); // Reset if opened from generic button

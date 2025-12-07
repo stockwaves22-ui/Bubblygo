@@ -1,15 +1,13 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getStainAdvice = async (stainQuery: string): Promise<string> => {
-  if (!apiKey) {
+  if (!process.env.API_KEY) {
     return "Sisya AI is currently offline (Missing API Key).";
   }
 
   try {
-    const model = 'gemini-2.5-flash';
     // Updated prompt to be general purpose while maintaining persona
     const prompt = `You are Sisya, a friendly and intelligent AI assistant for BubblyGo (a premium laundry service in Mandya). 
     A user is asking: "${stainQuery}".
@@ -23,7 +21,7 @@ export const getStainAdvice = async (stainQuery: string): Promise<string> => {
     Answer clearly and concisely.`;
 
     const response = await ai.models.generateContent({
-      model: model,
+      model: 'gemini-2.5-flash',
       contents: prompt,
     });
 

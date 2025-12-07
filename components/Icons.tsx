@@ -13,7 +13,14 @@ import {
   X,
   Send,
   MessageCircle,
-  Bot
+  Bot,
+  ArrowRight,
+  ArrowDown,
+  Moon,
+  Sun,
+  Calendar,
+  Smile,
+  Quote
 } from 'lucide-react';
 
 export const Icons = {
@@ -31,5 +38,12 @@ export const Icons = {
   X,
   Send,
   MessageCircle,
-  Bot
+  Bot,
+  ArrowRight,
+  ArrowDown,
+  Moon,
+  Sun,
+  Calendar,
+  Smile,
+  Quote
 };

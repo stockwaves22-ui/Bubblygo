@@ -1,37 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Icons } from './Icons';
 
 interface LogoProps {
   className?: string;
 }
 
 export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
+  const [imgError, setImgError] = useState(false);
+
+  // Using the thumbnail endpoint is often more reliable for embedding than the export=view link
+  const googleDriveUrl = "https://drive.google.com/thumbnail?id=1vVHYdO2LTKzbzxsE_aj2QGZZJW7-aa99&sz=w1000";
+
+  if (imgError) {
+     return (
+        <div className={`flex items-center gap-2 font-bold text-2xl tracking-tight ${className}`}>
+           <div className="bg-brand-100 dark:bg-brand-900 p-1.5 rounded-full text-brand-600 dark:text-brand-400">
+             <Icons.Droplet size={20} fill="currentColor" />
+           </div>
+           <span className="text-slate-900 dark:text-white">Bubbly<span className="text-brand-500">Go</span></span>
+        </div>
+     );
+  }
+
   return (
-    // The text-color is inherited from parent or defaults to slate-900.
-    // Pass 'text-white' in className to make the text white.
-    <div className={`select-none inline-block text-slate-900 ${className}`} aria-label="BubblyGo Logo">
-      <svg 
-        viewBox="0 0 340 100" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full block"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        {/* Bright Yellow Circle - Fixed Color */}
-        <circle cx="50" cy="50" r="42" fill="#FFF500" />
-        
-        {/* Text - Uses currentColor to adapt to header/footer */}
-        <text 
-          x="35" 
-          y="75" 
-          fill="currentColor" 
-          fontFamily="'Times New Roman', Times, serif" 
-          fontWeight="bold" 
-          fontSize="80" 
-          letterSpacing="-3"
-        >
-          Bubblygo
-        </text>
-      </svg>
+    <div className={`select-none inline-block ${className}`} aria-label="BubblyGo Logo">
+      <img 
+        src={googleDriveUrl}
+        alt="BubblyGo Logo" 
+        className="h-full w-auto object-contain"
+        onError={() => setImgError(true)}
+      />
     </div>
   );
 };

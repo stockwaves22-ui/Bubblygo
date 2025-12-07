@@ -40,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({ onBookNow }) => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <a href="#" onClick={(e) => handleNavClick(e)} className="flex items-center gap-2 group">
-          <div className="h-12 w-auto">
+          <div className="h-12 w-auto text-slate-900">
              <Logo className="h-full w-auto" />
           </div>
         </a>
@@ -50,6 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ onBookNow }) => {
           <a href="#" onClick={(e) => handleNavClick(e)} className="text-sm font-medium text-slate-600 hover:text-brand-600 transition">Home</a>
           <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className="text-sm font-medium text-slate-600 hover:text-brand-600 transition">Services</a>
           <a href="#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="text-sm font-medium text-slate-600 hover:text-brand-600 transition">How It Works</a>
+          
           <button 
             onClick={onBookNow}
             className="px-5 py-2.5 bg-brand-600 text-white text-sm font-semibold rounded-full hover:bg-brand-700 transition shadow-md"
@@ -59,12 +60,14 @@ export const Header: React.FC<HeaderProps> = ({ onBookNow }) => {
         </nav>
 
         {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-slate-700"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+            <button 
+            className="text-slate-700"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+            {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
+            </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

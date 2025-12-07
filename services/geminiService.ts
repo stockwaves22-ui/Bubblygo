@@ -5,25 +5,31 @@ const ai = new GoogleGenAI({ apiKey });
 
 export const getStainAdvice = async (stainQuery: string): Promise<string> => {
   if (!apiKey) {
-    return "AI Assistant is currently offline (Missing API Key). Try 'Red Wine' or 'Coffee' for generic advice.";
+    return "Sisya AI is currently offline (Missing API Key).";
   }
 
   try {
     const model = 'gemini-2.5-flash';
-    const prompt = `You are a professional laundry expert at BubblyGo. 
-    A user is asking for advice on how to remove a specific stain: "${stainQuery}".
-    Provide a short, step-by-step guide (max 3 steps) on how to treat this stain before the laundry pickup. 
-    Keep the tone helpful, friendly, and professional. 
-    If the stain is extremely difficult, suggest they point it out to our driver for special treatment.`;
+    // Updated prompt to be general purpose while maintaining persona
+    const prompt = `You are Sisya, a friendly and intelligent AI assistant for BubblyGo (a premium laundry service in Mandya). 
+    A user is asking: "${stainQuery}".
+    
+    Instructions:
+    1. If the question is about stains or laundry, provide expert advice in max 3 steps.
+    2. If the question is general (greeting, joke, general knowledge, etc.), answer it helpfully and briefly.
+    3. Keep the tone friendly, professional, and helpful.
+    4. If the request is complex or unsafe, politely decline.
+    
+    Answer clearly and concisely.`;
 
     const response = await ai.models.generateContent({
       model: model,
       contents: prompt,
     });
 
-    return response.text || "I couldn't generate advice at the moment. Please ask our driver!";
+    return response.text || "I couldn't generate a response at the moment. Please try again!";
   } catch (error) {
-    console.error("Error fetching stain advice:", error);
-    return "Sorry, I'm having trouble connecting to the stain database right now.";
+    console.error("Error fetching AI response:", error);
+    return "Sorry, I'm having trouble connecting right now.";
   }
 };

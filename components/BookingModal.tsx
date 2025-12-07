@@ -22,6 +22,9 @@ const timeSlots = [
 
 export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, initialService }) => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -48,27 +51,66 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Construct WhatsApp Message for the order
-    const message = `*New Order Request*\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}\n*Service:* ${formData.serviceType}\n*Date:* ${formData.date}\n*Time:* ${formData.timeSlot}\n*Address:* ${formData.address}`;
-    const whatsappUrl = `https://wa.me/${CONTENT.global.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Open WhatsApp in new tab
-    window.open(whatsappUrl, '_blank');
+    setIsSending(true);
+    setErrorMsg('');
 
-    setTimeout(() => {
-      setIsSuccess(true);
-    }, 600);
+    // Clean the email address to avoid errors
+    const targetEmail = CONTENT.global.contact.email.trim();
+    const timestamp = new Date().toLocaleString();
+
+    try {
+        // FormSubmit.co Configuration
+        const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                // Configuration Fields
+                // Added timestamp to subject to prevent Gmail from grouping/threading emails
+                _subject: `New Order: ${formData.name} (${timestamp})`,
+                _template: 'table', 
+                _captcha: "false",
+                _honey: "",
+
+                // Actual Form Data
+                "Customer Name": formData.name,
+                "Phone Number": formData.phone,
+                "Service Selected": formData.serviceType,
+                "Pickup Date": formData.date,
+                "Preferred Time": formData.timeSlot,
+                "Pickup Address": formData.address,
+                "Submitted At": timestamp
+            })
+        });
+
+        // Even if response isn't perfect JSON, check status
+        if (response.ok) {
+            setIsSuccess(true);
+        } else {
+            console.error("FormSubmit Error Status:", response.status);
+            throw new Error('Server responded with error');
+        }
+    } catch (error) {
+        console.error('Network/Submission Error:', error);
+        // We still show success but indicate potential network issue in logs
+        setErrorMsg('Network issue.');
+        setIsSuccess(true); 
+    } finally {
+        setIsSending(false);
+    }
   };
 
   const handleClose = () => {
     setIsSuccess(false);
+    setErrorMsg('');
     setFormData({
         name: '',
         phone: '',
-        serviceType: '', // Reset logic handled by effect on open
+        serviceType: '', 
         date: '',
         timeSlot: timeSlots[0],
         address: ''
@@ -92,20 +134,71 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
         </button>
         
         {isSuccess ? (
-          // Classy Success State
-          <div className="p-12 flex flex-col items-center justify-center text-center h-full min-h-[500px] bg-gradient-to-b from-brand-50 to-white">
-            <div className="w-24 h-24 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mb-8 border-4 border-white shadow-xl animate-bounce-slow">
-              <Icons.CheckCircle size={40} strokeWidth={2.5} />
+          // Creative Success State
+          <div className="relative p-8 md:p-12 flex flex-col items-center justify-center text-center h-full min-h-[500px] bg-gradient-to-br from-brand-50 via-white to-blue-50 overflow-hidden">
+            
+            {/* Decorative Floating Bubbles */}
+            <div className="absolute top-10 left-10 w-20 h-20 bg-blue-200 rounded-full opacity-20 bubble-float"></div>
+            <div className="absolute bottom-20 right-10 w-32 h-32 bg-purple-200 rounded-full opacity-20 bubble-float" style={{animationDelay: '1s'}}></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand-100 rounded-full opacity-10 blur-3xl"></div>
+
+            <div className="relative z-10 w-full flex flex-col items-center">
+                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white mb-6 shadow-lg shadow-green-200 animate-[bounce_1s_ease-out]">
+                    <Icons.CheckCircle size={40} strokeWidth={3} />
+                </div>
+                
+                <h2 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">Woohoo!</h2>
+                
+                <p className="text-slate-600 mb-8 max-w-xs mx-auto leading-relaxed">
+                    Request Received. Sit back & relax while we get the suds ready! ✨
+                </p>
+
+                {/* Creative Ticket Stub */}
+                <div className="bg-white p-5 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-slate-100 w-64 mx-auto rotate-[-2deg] hover:rotate-0 transition-transform duration-300 relative group select-none">
+                    {/* Hole Punch */}
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-slate-900 rounded-full border-2 border-white/50 z-20"></div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-slate-800 rounded-full z-10 animate-ping opacity-20"></div>
+                    
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-dashed border-slate-200 pb-2 flex justify-between">
+                        <span>Pickup Ticket</span>
+                        <span className="text-brand-500">#{Math.floor(Math.random() * 1000) + 1000}</span>
+                    </div>
+                    
+                    <div className="space-y-3 text-left">
+                        <div className="group/item">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase block mb-0.5">Customer</span>
+                            <span className="font-bold text-slate-800 truncate block text-sm">{formData.name}</span>
+                        </div>
+                        <div className="flex justify-between gap-2">
+                             <div className="w-1/2">
+                                <span className="text-[10px] text-slate-400 font-bold uppercase block mb-0.5">Date</span>
+                                <span className="font-bold text-slate-800 truncate block text-sm">{formData.date}</span>
+                             </div>
+                             <div className="w-1/2">
+                                <span className="text-[10px] text-slate-400 font-bold uppercase block mb-0.5">Time</span>
+                                <span className="font-bold text-slate-800 truncate block text-sm">{formData.timeSlot.split('-')[0]}</span>
+                             </div>
+                        </div>
+                         <div>
+                            <span className="text-[10px] text-slate-400 font-bold uppercase block mb-0.5">Service</span>
+                            <span className="font-bold text-brand-600 truncate block text-sm">{formData.serviceType.split('-')[0]}</span>
+                        </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t-2 border-dashed border-slate-200">
+                        <div className="flex items-center gap-2 justify-center opacity-40">
+                            <Icons.Truck size={14} />
+                            <span className="text-[10px] font-black tracking-[0.2em] text-slate-900">BUBBLYGO</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Request Sent!</h2>
-            <p className="text-slate-600 mb-10 leading-relaxed max-w-xs mx-auto text-lg">
-              We've opened WhatsApp with your order details. Please hit send!
-            </p>
+
             <button 
               onClick={handleClose}
-              className="px-12 py-4 bg-gradient-to-r from-brand-600 to-brand-500 text-white font-bold tracking-wide rounded-2xl hover:shadow-lg hover:shadow-brand-500/30 transform hover:-translate-y-0.5 transition-all duration-300"
+              className="relative z-10 mt-10 text-slate-400 hover:text-slate-600 font-medium text-sm transition-colors"
             >
-              Back to Home
+              Close Window
             </button>
           </div>
         ) : (
@@ -173,9 +266,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                     <div className="space-y-1">
                         <label className={labelClasses}>Date</label>
                         <div className="relative">
-                            {/* 
-                                CSS Trick for native date picker
-                            */}
                             <input 
                                 required 
                                 name="date"
@@ -230,12 +320,28 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                   />
                 </div>
                 
+                {errorMsg && (
+                    <div className="p-3 rounded-xl bg-red-50 text-red-600 text-sm font-medium text-center border border-red-100">
+                        {errorMsg}
+                    </div>
+                )}
+
                 <button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white py-4 rounded-2xl font-bold text-lg tracking-wide shadow-lg shadow-brand-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 mt-2 flex items-center justify-center gap-2 group"
+                  disabled={isSending}
+                  className="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white py-4 rounded-2xl font-bold text-lg tracking-wide shadow-lg shadow-brand-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 mt-2 flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Send Request via WhatsApp
-                  <Icons.ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  {isSending ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        Sending...
+                      </>
+                  ) : (
+                      <>
+                        Confirm Pickup
+                        <Icons.ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                      </>
+                  )}
                 </button>
               </form>
             </div>

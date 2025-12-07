@@ -7,7 +7,7 @@ export const CONTENT = {
   global: {
     name: "BubblyGo",
     // Paste your Google Drive Thumbnail URL or any Image URL here
-    logoUrl: "https://drive.google.com/thumbnail?id=1vVHYdO2LTKzbzxsE_aj2QGZZJW7-aa99&sz=w1000",
+    logoUrl: "https://drive.google.com/thumbnail?id=1vVHYdO2LTKzbzxsE_aj2QGZZJW7-aa99",
     
     contact: {
       // Format: Country code + Number (e.g., 919076052901) for WhatsApp link

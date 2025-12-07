@@ -8,7 +8,7 @@ export const CONTENT = {
     name: "BubblyGo",
     // Leave empty ("") to use the new custom BubblyGo logo designed in code.
     // Or paste a direct image URL (png/jpg) here to override it.
-    logoUrl: "https://drive.google.com/thumbnail?id=1vVHYdO2LTKzbzxsE_aj2QGZZJW7-aa99&sz=w1000", 
+    logoUrl: "", 
     
     contact: {
       // Format: Country code + Number (e.g., 919076052901) for WhatsApp link

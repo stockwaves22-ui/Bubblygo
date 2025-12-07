@@ -26,9 +26,9 @@ export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
               </svg>
            </div>
            
-           {/* Text Logo */}
+           {/* Text Logo with Red Rose Font */}
            <div className="flex flex-col justify-center h-full">
-             <span className="font-sans font-bold text-xl leading-none tracking-tight text-slate-900">
+             <span className="font-logo font-bold text-2xl leading-none tracking-tight text-slate-900">
                Bubbly<span className="text-brand-600">Go</span>
              </span>
            </div>

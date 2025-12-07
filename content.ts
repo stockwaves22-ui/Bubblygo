@@ -56,7 +56,8 @@ export const CONTENT = {
       description: 'Everyday laundry. Washed with premium detergent, dried, and neatly folded.',
       price: '₹60 / kg',
       iconName: 'Shirt',
-      isExpress: false
+      isExpress: false,
+      deliveryTime: '2-3 Days'
     },
     {
       id: '2',
@@ -64,7 +65,8 @@ export const CONTENT = {
       description: 'Complete care. Washing plus steam ironing for a crisp, wrinkle-free finish.',
       price: '₹90 / kg',
       iconName: 'Sparkles',
-      isExpress: false
+      isExpress: false,
+      deliveryTime: '2-3 Days'
     },
     {
       id: '3',
@@ -72,7 +74,8 @@ export const CONTENT = {
       description: 'Just need the creases out? Professional steam ironing for delicate fabrics.',
       price: '₹30 / pc',
       iconName: 'Wind',
-      isExpress: false
+      isExpress: false,
+      deliveryTime: '2-3 Days'
     },
     {
       id: '4',
@@ -80,7 +83,8 @@ export const CONTENT = {
       description: 'Special care for Mysore Silk, Suits, and heavy blankets using gentle chemicals.',
       price: 'From ₹200',
       iconName: 'Sparkles',
-      isExpress: false
+      isExpress: false,
+      deliveryTime: '3-4 Days'
     },
     {
       id: '5',
@@ -88,7 +92,8 @@ export const CONTENT = {
       description: 'Urgent requirement? Get your clean laundry back in record time.',
       price: '₹120 / kg',
       iconName: 'Clock',
-      isExpress: true
+      isExpress: true,
+      deliveryTime: '24 Hours'
     },
     {
       id: '6',
@@ -96,7 +101,8 @@ export const CONTENT = {
       description: 'Quick turnaround for your urgent meetings and events.',
       price: '₹150 / kg',
       iconName: 'Clock',
-      isExpress: true
+      isExpress: true,
+      deliveryTime: '24 Hours'
     }
   ],
 

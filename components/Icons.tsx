@@ -20,7 +20,9 @@ import {
   Sun,
   Calendar,
   Smile,
-  Quote
+  Quote,
+  Facebook,
+  Instagram
 } from 'lucide-react';
 
 export const Icons = {
@@ -45,5 +47,7 @@ export const Icons = {
   Sun,
   Calendar,
   Smile,
-  Quote
+  Quote,
+  Facebook,
+  Instagram
 };

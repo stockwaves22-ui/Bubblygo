@@ -51,9 +51,15 @@ export const Services: React.FC<ServicesProps> = ({ onBookService }) => {
                 </div>
 
                 <h3 className={`text-xl font-bold mb-3 ${isExpress ? 'text-white' : 'text-slate-900'}`}>{service.title}</h3>
-                <p className={`mb-8 leading-relaxed flex-grow ${isExpress ? 'text-slate-300' : 'text-slate-500'}`}>
+                <p className={`mb-6 leading-relaxed flex-grow ${isExpress ? 'text-slate-300' : 'text-slate-500'}`}>
                   {service.description}
                 </p>
+
+                {/* Delivery Time Badge */}
+                <div className={`mb-6 flex items-center gap-2 text-sm font-semibold ${isExpress ? 'text-brand-300' : 'text-slate-500'}`}>
+                    <Icons.Clock size={16} />
+                    <span>Delivery: {service.deliveryTime}</span>
+                </div>
                 
                 <div className={`mt-auto pt-6 border-t ${isExpress ? 'border-white/10' : 'border-slate-100'} flex items-center justify-between`}>
                    <span className={`text-sm font-medium ${isExpress ? 'text-brand-300' : 'text-slate-400'}`}>Starting at</span>

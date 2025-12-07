@@ -4,6 +4,8 @@ export interface ServiceItem {
   description: string;
   price: string;
   iconName: 'Shirt' | 'Wind' | 'Sparkles' | 'Clock';
+  isExpress: boolean;
+  deliveryTime: string;
 }
 
 export interface Testimonial {

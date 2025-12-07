@@ -21,8 +21,8 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-white text-slate-600 pt-20 pb-10 border-t border-slate-100">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+          {/* Brand & Socials */}
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="h-14 w-auto">
@@ -31,27 +31,17 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
-            <p className="text-base text-slate-500 leading-relaxed mb-6">
+            <p className="text-base text-slate-500 leading-relaxed mb-6 max-w-sm">
               Mandya's most trusted laundry partner. We bring premium fabric care right to your doorstep, so you can enjoy the sweetness of Sugar City!
             </p>
             <div className="flex gap-4">
-              <a href={socials.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-brand-600 hover:text-white transition cursor-pointer">
-                <span className="font-bold text-xs">FB</span>
+              <a href={socials.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-brand-600 hover:text-white transition cursor-pointer" aria-label="Facebook">
+                <Icons.Facebook size={20} />
               </a>
-              <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-pink-600 hover:text-white transition cursor-pointer">
-                <span className="font-bold text-xs">IG</span>
+              <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-pink-600 hover:text-white transition cursor-pointer" aria-label="Instagram">
+                <Icons.Instagram size={20} />
               </a>
             </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-slate-900 font-bold text-lg mb-6">Quick Links</h4>
-            <ul className="space-y-4 text-base">
-              <li><a href="#" onClick={(e) => handleNavClick(e)} className="hover:text-brand-600 transition flex items-center gap-2"><Icons.CheckCircle size={14} className="opacity-0 hover:opacity-100 transition" /> Home</a></li>
-              <li><a href="#services" onClick={(e) => handleNavClick(e, 'services')} className="hover:text-brand-600 transition flex items-center gap-2"><Icons.CheckCircle size={14} className="opacity-0 hover:opacity-100 transition" /> Services</a></li>
-              <li><a href="#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="hover:text-brand-600 transition flex items-center gap-2"><Icons.CheckCircle size={14} className="opacity-0 hover:opacity-100 transition" /> How It Works</a></li>
-            </ul>
           </div>
 
           {/* Service Areas */}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icons } from './Icons';
+import { CONTENT } from '../content';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -7,14 +8,8 @@ interface BookingModalProps {
   initialService?: string;
 }
 
-const serviceOptions = [
-  "Wash & Fold - ₹60/kg",
-  "Wash & Iron - ₹90/kg",
-  "Steam Ironing - ₹30/pc",
-  "Dry Cleaning - Starts ₹200",
-  "Express Wash & Fold - ₹120/kg",
-  "Express Wash & Iron - ₹150/kg",
-];
+// Dynamically generate options from the content file
+const serviceOptions = CONTENT.services.map(s => `${s.title} - ${s.price}`);
 
 const timeSlots = [
   "8:00 AM - 10:00 AM",
@@ -55,6 +50,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Construct WhatsApp Message for the order
+    const message = `*New Order Request*\n\n*Name:* ${formData.name}\n*Phone:* ${formData.phone}\n*Service:* ${formData.serviceType}\n*Date:* ${formData.date}\n*Time:* ${formData.timeSlot}\n*Address:* ${formData.address}`;
+    const whatsappUrl = `https://wa.me/${CONTENT.global.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank');
+
     setTimeout(() => {
       setIsSuccess(true);
     }, 600);
@@ -94,9 +97,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
             <div className="w-24 h-24 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mb-8 border-4 border-white shadow-xl animate-bounce-slow">
               <Icons.CheckCircle size={40} strokeWidth={2.5} />
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Pickup Scheduled!</h2>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Request Sent!</h2>
             <p className="text-slate-600 mb-10 leading-relaxed max-w-xs mx-auto text-lg">
-              We've received your request. Our agent will call you shortly to confirm.
+              We've opened WhatsApp with your order details. Please hit send!
             </p>
             <button 
               onClick={handleClose}
@@ -110,7 +113,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
           <div className="flex flex-col h-full max-h-[90vh]">
              <div className="px-8 pt-10 pb-4 bg-gradient-to-b from-brand-50/50 to-transparent">
                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-100 rounded-full text-xs font-bold tracking-widest uppercase text-brand-700 mb-4">
-                     <Icons.MapPin size={12} /> Sugar City
+                     <Icons.MapPin size={12} /> {CONTENT.global.contact.address.includes("Mandya") ? "Sugar City" : "Service Area"}
                  </div>
                  <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Schedule Pickup</h2>
                  <p className="text-slate-500 mt-2 font-medium">Quick & easy laundry service at your doorstep.</p>
@@ -171,10 +174,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                         <label className={labelClasses}>Date</label>
                         <div className="relative">
                             {/* 
-                                CSS Trick for native date picker:
-                                1. We hide the default calendar indicator icon but expand its clickable area to cover the entire input.
-                                2. This ensures clicking anywhere on the input triggers the native picker.
-                                3. We place our custom icon absolutely positioned behind or with pointer-events-none.
+                                CSS Trick for native date picker
                             */}
                             <input 
                                 required 
@@ -234,7 +234,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                   type="submit" 
                   className="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white py-4 rounded-2xl font-bold text-lg tracking-wide shadow-lg shadow-brand-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 mt-2 flex items-center justify-center gap-2 group"
                 >
-                  Confirm Pickup
+                  Send Request via WhatsApp
                   <Icons.ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>

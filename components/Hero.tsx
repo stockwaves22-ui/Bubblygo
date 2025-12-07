@@ -1,11 +1,14 @@
 import React from 'react';
 import { Icons } from './Icons';
+import { CONTENT } from '../content';
 
 interface HeroProps {
   onBookNow: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onBookNow }) => {
+  const { hero } = CONTENT;
+
   return (
     <section className="relative w-full min-h-[90vh] flex items-center bg-gradient-to-br from-brand-50 via-white to-brand-100 pt-32 pb-20 overflow-hidden">
       {/* Decorative Bubbles */}
@@ -18,18 +21,18 @@ export const Hero: React.FC<HeroProps> = ({ onBookNow }) => {
           {/* Popping Green GPS Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-bold tracking-wide text-brand-700 bg-white border border-brand-100 rounded-full shadow-sm">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            Serving Sugar City
+            {hero.badge}
           </div>
           
           {/* One Line Headline - Bigger on Mobile */}
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight mb-6 tracking-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-brand-400">
-              Freshness
-            </span> On The Go.
+              {hero.titlePart1}
+            </span> {hero.titlePart2}
           </h1>
           
           <p className="text-xl text-slate-600 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            Professional Wash & Fold, Steam Ironing, and Dry Cleaning in Mandya. Schedule a pickup in seconds.
+            {hero.subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -38,31 +41,25 @@ export const Hero: React.FC<HeroProps> = ({ onBookNow }) => {
               className="px-10 py-5 bg-brand-600 text-white font-bold rounded-full shadow-brand-500/30 shadow-lg hover:bg-brand-700 hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-lg"
             >
               <Icons.Truck size={24} />
-              Book Pickup Now
+              {hero.buttonText}
             </button>
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-3 text-sm font-medium text-slate-500">
-            <div className="flex items-center gap-2">
-              <div className="p-1 bg-green-100 rounded-full text-green-600"><Icons.CheckCircle size={14} /></div>
-              Hygienic Wash
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="p-1 bg-green-100 rounded-full text-green-600"><Icons.CheckCircle size={14} /></div>
-              Express Delivery
-            </div>
-             <div className="flex items-center gap-2">
-              <div className="p-1 bg-green-100 rounded-full text-green-600"><Icons.CheckCircle size={14} /></div>
-              Affordable Rates
-            </div>
+            {hero.features.map((feature, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <div className="p-1 bg-green-100 rounded-full text-green-600"><Icons.CheckCircle size={14} /></div>
+                {feature}
+              </div>
+            ))}
           </div>
         </div>
         
         <div className="flex-1 w-full max-w-lg lg:max-w-xl relative animate-fade-in-up" style={{animationDelay: '0.2s'}}>
           <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-[6px] border-white transform rotate-1 hover:rotate-0 transition duration-700 ease-out group">
-            {/* New Image: Stack of clean clothes / laundry */}
+            {/* Editable Image from Content */}
             <img 
-              src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop" 
+              src={hero.mainImage} 
               alt="Fresh Laundry Stack" 
               className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-700"
             />

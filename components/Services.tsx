@@ -1,55 +1,10 @@
 import React from 'react';
 import { Icons } from './Icons';
-import { ServiceItem } from '../types';
+import { CONTENT } from '../content';
 
 interface ServicesProps {
     onBookService: (serviceName: string) => void;
 }
-
-const services: ServiceItem[] = [
-  {
-    id: '1',
-    title: 'Wash & Fold',
-    description: 'Everyday laundry. Washed with premium detergent, dried, and neatly folded.',
-    price: '₹60 / kg',
-    iconName: 'Shirt',
-  },
-  {
-    id: '2',
-    title: 'Wash & Iron',
-    description: 'Complete care. Washing plus steam ironing for a crisp, wrinkle-free finish.',
-    price: '₹90 / kg',
-    iconName: 'Sparkles',
-  },
-  {
-    id: '3',
-    title: 'Steam Ironing',
-    description: 'Just need the creases out? Professional steam ironing for delicate fabrics.',
-    price: '₹30 / pc',
-    iconName: 'Wind',
-  },
-  {
-    id: '4',
-    title: 'Dry Cleaning',
-    description: 'Special care for Mysore Silk, Suits, and heavy blankets using gentle chemicals.',
-    price: 'From ₹200',
-    iconName: 'Sparkles',
-  },
-  {
-    id: '5',
-    title: 'Express Wash & Fold',
-    description: 'Urgent requirement? Get your clean laundry back in record time.',
-    price: '₹120 / kg',
-    iconName: 'Clock',
-  },
-  {
-    id: '6',
-    title: 'Express Wash & Iron',
-    description: 'Quick turnaround for your urgent meetings and events.',
-    price: '₹150 / kg',
-    iconName: 'Clock',
-  }
-];
 
 export const Services: React.FC<ServicesProps> = ({ onBookService }) => {
   return (
@@ -64,9 +19,10 @@ export const Services: React.FC<ServicesProps> = ({ onBookService }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, idx) => {
-            const IconComponent = Icons[service.iconName];
-            const isExpress = service.title.includes('Express');
+          {CONTENT.services.map((service) => {
+            // @ts-ignore - Dynamic icon mapping
+            const IconComponent = Icons[service.iconName] || Icons.Shirt;
+            const isExpress = service.isExpress;
             
             return (
               <div 

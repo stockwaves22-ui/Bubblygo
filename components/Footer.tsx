@@ -1,9 +1,11 @@
 import React from 'react';
 import { Icons } from './Icons';
 import { Logo } from './Logo';
-import { CONTACT_INFO } from '../config';
+import { CONTENT } from '../content';
 
 export const Footer: React.FC = () => {
+  const { contact, socials } = CONTENT.global;
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id?: string) => {
     e.preventDefault();
     if (id) {
@@ -33,12 +35,12 @@ export const Footer: React.FC = () => {
               Mandya's most trusted laundry partner. We bring premium fabric care right to your doorstep, so you can enjoy the sweetness of Sugar City!
             </p>
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-brand-600 hover:text-white transition cursor-pointer">
+              <a href={socials.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-brand-600 hover:text-white transition cursor-pointer">
                 <span className="font-bold text-xs">FB</span>
-              </div>
-              <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-pink-600 hover:text-white transition cursor-pointer">
+              </a>
+              <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-pink-600 hover:text-white transition cursor-pointer">
                 <span className="font-bold text-xs">IG</span>
-              </div>
+              </a>
             </div>
           </div>
 
@@ -76,14 +78,21 @@ export const Footer: React.FC = () => {
                  <div className="bg-brand-50 p-2 rounded-lg text-brand-600"><Icons.Phone size={20} /></div>
                  <div>
                     <p className="text-xs text-slate-400 uppercase font-bold">Call / WhatsApp</p>
-                    <a href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`} className="text-slate-800 font-medium hover:text-brand-600 transition">{CONTACT_INFO.displayPhone}</a>
+                    <a href={`https://wa.me/${contact.whatsappNumber}`} className="text-slate-800 font-medium hover:text-brand-600 transition">{contact.displayPhone}</a>
                  </div>
                </li>
                <li className="flex items-start gap-4">
                  <div className="bg-brand-50 p-2 rounded-lg text-brand-600"><Icons.Send size={20} /></div>
                  <div>
                     <p className="text-xs text-slate-400 uppercase font-bold">Email Us</p>
-                    <a href={`mailto:${CONTACT_INFO.email}`} className="text-slate-600 hover:text-brand-600 transition break-all">{CONTACT_INFO.email}</a>
+                    <a href={`mailto:${contact.email}`} className="text-slate-600 hover:text-brand-600 transition break-all">{contact.email}</a>
+                 </div>
+               </li>
+               <li className="flex items-start gap-4">
+                 <div className="bg-brand-50 p-2 rounded-lg text-brand-600"><Icons.MapPin size={20} /></div>
+                 <div>
+                    <p className="text-xs text-slate-400 uppercase font-bold">Address</p>
+                    <p className="text-slate-600 text-sm">{contact.address}</p>
                  </div>
                </li>
              </ul>
@@ -91,7 +100,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-slate-100 pt-8 text-center text-sm text-slate-400 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>&copy; {new Date().getFullYear()} BubblyGo Laundry Mandya. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {CONTENT.global.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Icons } from './Icons';
+import { CONTENT } from '../content';
 
 export const Testimonials: React.FC = () => {
+  const { reviews } = CONTENT;
+
   return (
     <section className="py-20 bg-slate-900 text-white relative overflow-hidden flex items-center justify-center">
        {/* Minimal Background Accents */}
@@ -18,17 +21,17 @@ export const Testimonials: React.FC = () => {
             </div>
             
             <h2 className="text-4xl md:text-6xl font-serif font-medium mb-6 tracking-tight text-white">
-                Our <span className="italic text-brand-400">Promise</span>.
+                Our <span className="italic text-brand-400">{reviews.title}</span>.
             </h2>
             
             <p className="text-slate-300 text-lg md:text-xl font-light tracking-wide max-w-lg mx-auto leading-relaxed">
-                Mandya's newest premium laundry service is here. We are committed to delivering 5-star care for your clothes.
+                {reviews.text}
             </p>
 
             <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-sm text-slate-400 uppercase tracking-widest font-semibold">
-                <span>Trusted Choice</span>
+                <span>{reviews.badge1}</span>
                 <span className="hidden md:block w-1.5 h-1.5 bg-brand-500 rounded-full"></span>
-                <span>Premium Quality Guaranteed</span>
+                <span>{reviews.badge2}</span>
             </div>
         </div>
       </div>

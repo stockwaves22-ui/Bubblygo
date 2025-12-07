@@ -7,10 +7,12 @@ import { Testimonials } from './components/Testimonials';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { CONTENT } from './content';
 
 function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>('');
+  const { about } = CONTENT;
 
   const handleBookClick = () => {
     setSelectedService(''); // Reset if opened from generic button
@@ -20,6 +22,17 @@ function App() {
   const handleServiceSelect = (serviceName: string) => {
     setSelectedService(serviceName);
     setIsBookingOpen(true);
+  };
+
+  // Helper to parse markdown-style bold text e.g. **Sugar City**
+  const parseText = (text: string) => {
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i}>{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
   };
 
   return (
@@ -38,13 +51,13 @@ function App() {
 
             <div className="container mx-auto px-6 relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
-                    <span className="text-brand-600 font-bold uppercase tracking-wider text-sm mb-4 block">Our Story</span>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">Bringing Professional Laundry Care to Mandya</h2>
+                    <span className="text-brand-600 font-bold uppercase tracking-wider text-sm mb-4 block">{about.sectionTitle}</span>
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">{about.headline}</h2>
                     <p className="text-slate-600 mb-8 text-lg md:text-xl leading-relaxed">
-                        Started right here in <strong>Sugar City</strong>, BubblyGo was born from a simple desire: to give families in our city more free time. We know that between work, traffic, and family, doing laundry is the last thing you want to worry about.
+                        {parseText(about.paragraph1)}
                     </p>
                     <p className="text-slate-600 text-lg md:text-xl leading-relaxed mb-10">
-                        Whether it's the red soil stains from the field, coffee spills on your office shirt, or your delicate <strong>Mysore Silk</strong> sarees, our expert team uses advanced technology and eco-friendly detergents to make your clothes look brand new.
+                        {parseText(about.paragraph2)}
                     </p>
                     <button onClick={handleBookClick} className="inline-block bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
                         Schedule a Pickup Today &rarr;

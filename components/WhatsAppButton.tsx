@@ -1,9 +1,9 @@
 import React from 'react';
-import { CONTACT_INFO } from '../config';
+import { CONTENT } from '../content';
 
 export const WhatsAppButton: React.FC = () => {
-  const message = "Hello! I would like to schedule a laundry pickup.";
-  const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const { whatsappNumber, whatsappMessage } = CONTENT.global.contact;
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <a

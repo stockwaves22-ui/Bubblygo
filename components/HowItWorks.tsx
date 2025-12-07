@@ -1,35 +1,10 @@
 import React from 'react';
 import { Icons } from './Icons';
-import { Step } from '../types';
-
-const steps: Step[] = [
-  {
-    id: 1,
-    title: 'Book',
-    description: 'Online',
-    iconName: 'Phone',
-  },
-  {
-    id: 2,
-    title: 'Pickup',
-    description: 'We Come',
-    iconName: 'Truck',
-  },
-  {
-    id: 3,
-    title: 'Washing',
-    description: 'We Clean',
-    iconName: 'Droplet',
-  },
-  {
-    id: 4,
-    title: 'Delivery',
-    description: 'To You',
-    iconName: 'CheckCircle',
-  },
-];
+import { CONTENT } from '../content';
 
 export const HowItWorks: React.FC = () => {
+  const steps = CONTENT.howItWorks;
+
   return (
     <section id="how-it-works" className="py-24 bg-white relative overflow-hidden">
       
@@ -48,7 +23,8 @@ export const HowItWorks: React.FC = () => {
                 </div>
 
                 {steps.map((step, index) => {
-                    const IconComponent = Icons[step.iconName];
+                    // @ts-ignore
+                    const IconComponent = Icons[step.iconName] || Icons.CheckCircle;
                     const isLast = index === steps.length - 1;
 
                     return (

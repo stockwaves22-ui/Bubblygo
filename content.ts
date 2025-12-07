@@ -54,7 +54,7 @@ export const CONTENT = {
       id: '1',
       title: 'Wash & Fold',
       description: 'Everyday laundry. Washed with premium detergent, dried, and neatly folded.',
-      price: '₹60 / kg',
+      price: '₹30 / kg',
       iconName: 'Shirt',
       isExpress: false,
       deliveryTime: '2-3 Days'
